@@ -8,7 +8,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      props: { url: 'Hello from the route!' }
+      props: { baseApiUrl: '' }
     },
     {
       path: '/about',

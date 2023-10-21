@@ -18,7 +18,7 @@
     </div>
   </header>
 
-  <RouterView :url="env" />
+  <RouterView :baseApiUrl="baseApiUrl" />
 </template>
 
 <script lang="ts">
@@ -27,15 +27,15 @@ import { RouterLink, RouterView } from "vue-router";
 export default {
   data() {
     return {
-      env: "",
+      baseApiUrl: "",
     };
   },
-  async created() {
+  async beforeCreate() {
     try {
       const response = await fetch("/environment.json"); // Reference the file by its URL]
       if (response.ok) {
         const environmentData = await response.json();
-        this.env = environmentData.API_BASE_URL;
+        this.baseApiUrl = environmentData.API_BASE_URL;
         console.log(environmentData);
       } else {
         console.error("Failed to fetch environment data");

@@ -1,15 +1,15 @@
 <template>
   <main>
-    <TheWelcome />
-    {{ url }}
+    <TheWelcome v-if="baseApiUrl !== ''" />
+    {{ baseApiUrl }}
   </main>
 </template>
 
 <script lang="ts">
-import TheWelcome from "../components/TheWelcome.vue";
+import TheWelcome from "@/components/TheWelcome.vue";
 
 export default {
   components: { TheWelcome },
-  props: ["url"],
+  props: ["baseApiUrl"],
 };
 </script>
