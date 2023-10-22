@@ -48,7 +48,7 @@ export default {
       switch (type) {
         case "get":
           let pageValue = Number(url.searchParams.get("page")); // Get the 'page' parameter to the current page number
-          if (pageValue == NaN) return;
+          if (isNaN(pageValue)) return;
           if (pageValue == 0) pageValue += 1;
           this.pageNumber = pageValue;
         case "set":
