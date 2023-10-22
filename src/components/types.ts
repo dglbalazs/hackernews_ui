@@ -22,5 +22,16 @@ export interface Item {
 
   // ITEM WITH EXTRA FIELDS
   export interface ModifiedItem extends Item {
-    timeExact: string
+    timeExact: string;
+    byKarma?: number;
+  }
+
+
+// USER
+export interface User {
+    id: string;        // The user's unique username. Case-sensitive. Required.
+    created: number;   // Creation date of the user, in Unix Time.
+    karma: number;     // The user's karma.
+    about?: string;    // The user's optional self-description. HTML.
+    submitted: string[]; // List of the user's stories, polls, and comments.
   }

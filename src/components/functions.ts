@@ -1,4 +1,4 @@
-import type { Item, ModifiedItem } from "@/components/types"
+import type { Item, ModifiedItem, User } from "@/components/types"
 
 // ------------------------------
 // Description: Function that fetches the IDs of articles for main pages
@@ -32,9 +32,30 @@ export async function getItem(baseUrl: string, itemId: string): Promise<Modified
       throw new Error("Failed to fetch item");
     }
     const data = await response.json();
-    const modifiedItem = prepareOutputData(data)
+    const user = await getUserInfo(baseUrl, data.by)
+
+    const modifiedItem = prepareOutputData(data, user)
     
     return modifiedItem;
+  }
+
+// ------------------------------
+// Description: Function that fetches data for a user based on their Id
+// Parameters: 
+//      - baseUrl: string that is pointing towards the main endpoint
+//      - userId: the Id of the desired User as string
+// Output: 
+//      - an object containing user information
+// ------------------------------
+
+export async function getUserInfo(baseUrl: string, userId: string): Promise<User> {
+    const response = await fetch(baseUrl + "/user/" + userId + ".json");
+    if (!response.ok) {
+      throw new Error("Failed to fetch item");
+    }
+    const user = await response.json();
+    
+    return user;
   }
 
 
@@ -45,17 +66,20 @@ export async function getItem(baseUrl: string, itemId: string): Promise<Modified
 // ------------------------------
 // Description: Function that modifies the data fetched from the API endpoint and returns the extended data meant to be shown
 // Parameters: 
-//      - data: as Item type fetched from API endpoint
+//      - data: Item object type fetched from Item API endpoint
+//      - user: User object type fetched from User API endpoint
 // Output:
 //      - modifiedItem extended type that contains extra variables for the UI
 // ------------------------------
-function prepareOutputData(data: Item) : ModifiedItem {
+function prepareOutputData(data: Item, user: User) : ModifiedItem {
     const timeExact = formatDateTimeWithTimezone(data.time);
+    const byKarma = user.karma ? user.karma : 0
     
     // Create a ModifiedItem with the additional field
     const modifiedItem: ModifiedItem = {
       ...data,
       timeExact,
+      byKarma
     };
 
     return modifiedItem
