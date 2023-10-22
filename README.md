@@ -1,46 +1,26 @@
 # hackernews_ui
 
-This template should help get you started developing with Vue 3 in Vite.
+## IN PROGRESS
 
-## Recommended IDE Setup
+The project is still being developed. 
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Things to come:
+- Proper header that allows user to change between different API endpoints
+- Fixed floating Back and Next buttons
+- Proper Like / Upvote CTA button + Hide CTA button
+- Loading screen when the data is being loaded + possibly skeletons
+- Proper Unit Tests
+- Optional : Light / Dark mode? / Refresh Button for the user
 
-## Type Support for `.vue` Imports in TS
+Added functionalities:
+- Pagination works (button is currently quite hidden at the bottom of the page, but it works)
+- Correctly sorted and indexed
+- Date hover provides full information about the exact date and time of submission
+- Clicking on user name navigates to the user's profile
+- 
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## QUICK LINK
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+https://hackernews-ui.vercel.app/
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
