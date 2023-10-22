@@ -24,6 +24,7 @@ export interface Item {
   export interface ModifiedItem extends Item {
     timeExact: string;
     byKarma?: number;
+    itemIndex: number;
   }
 
 

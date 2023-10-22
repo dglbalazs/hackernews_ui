@@ -8,12 +8,19 @@ import type { Item, ModifiedItem, User } from "@/components/types"
 //      - an array of string containing the IDs of articles
 // ------------------------------
 
-export async function getData(baseUrl: string): Promise<string[]> {
-    const response = await fetch(baseUrl + '/topstories.json?limitToFirst=10&orderBy="$key"')
+export async function getData(baseUrl: string,  showNumber: number, pageNumber: number): Promise<string[] | Map<number,string>>{
+    
+    const actualPageIndex = pageNumber ? pageNumber - 1 : 0
+    const startAt = actualPageIndex && actualPageIndex > 0 ? actualPageIndex * showNumber : 0
+
+    const response = await fetch(baseUrl + '/topstories.json?startAt="' + startAt +'"&limitToFirst=' + showNumber + '&orderBy="$key"')
+
     if (!response.ok) {
         throw new Error("Failed to fetch top stories")
     }
-    return await response.json()
+    const data = await response.json()
+    console.warn(data[0])
+    return data
 }
 
 
@@ -26,7 +33,8 @@ export async function getData(baseUrl: string): Promise<string[]> {
 //      - an array of string containing the IDs of articles
 // ------------------------------
 
-export async function getItem(baseUrl: string, itemId: string): Promise<ModifiedItem> {
+export async function getItem(baseUrl: string, itemId: string, itemIndex: number): Promise<ModifiedItem> {
+
     const response = await fetch(baseUrl + "/item/" + itemId + ".json");
     if (!response.ok) {
       throw new Error("Failed to fetch item");
@@ -34,7 +42,7 @@ export async function getItem(baseUrl: string, itemId: string): Promise<Modified
     const data = await response.json();
     const user = await getUserInfo(baseUrl, data.by)
 
-    const modifiedItem = prepareOutputData(data, user)
+    const modifiedItem = prepareOutputData(data, user, itemIndex)
     
     return modifiedItem;
   }
@@ -71,7 +79,7 @@ export async function getUserInfo(baseUrl: string, userId: string): Promise<User
 // Output:
 //      - modifiedItem extended type that contains extra variables for the UI
 // ------------------------------
-function prepareOutputData(data: Item, user: User) : ModifiedItem {
+function prepareOutputData(data: Item, user: User, itemIndex: number) : ModifiedItem {
     const timeExact = formatDateTimeWithTimezone(data.time);
     const byKarma = user.karma ? user.karma : 0
     
@@ -79,7 +87,8 @@ function prepareOutputData(data: Item, user: User) : ModifiedItem {
     const modifiedItem: ModifiedItem = {
       ...data,
       timeExact,
-      byKarma
+      byKarma,
+      itemIndex
     };
 
     return modifiedItem
