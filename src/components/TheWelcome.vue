@@ -7,19 +7,16 @@
     <div>
       {{ baseApiUrl }}
     </div>
-    <div v-for="item in items" :key="item.id">
-      <h2>{{ item.title }}</h2>
-      <p>Author: {{ item.by }}</p>
-      <p>Descendants: {{ item.descendants }}</p>
-      <p>Time: {{ formatTime(item.time) }}</p>
-      <p>UNIX Time: {{ item.time }}</p>
-    </div>
+    <template v-for="item in items" :key="item.id">
+      <StoryItem :item="item"></StoryItem>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { getData, getItem } from "@/components/functions";
 import type { Item, ModifiedItem } from "@/components/types";
+import StoryItem from "@/components/StoryItem.vue";
 
 export default {
   data() {
@@ -40,40 +37,6 @@ export default {
     addItemInformation: function (itemData: ModifiedItem) {
       this.items.push(itemData);
     },
-    formatTime(unixTime: number) {
-      const currentTime = Math.floor(Date.now() / 1000);
-      const timeDifference = currentTime - unixTime;
-
-      // LESS THAN A MINUTE AGO
-      if (timeDifference < 60) {
-        return `${timeDifference} minute${timeDifference > 1 ? "s" : ""} ago`;
-
-        // LESS THAN AN HOUR AGO
-      } else if (timeDifference < 3600) {
-        const minutes = Math.floor(timeDifference / 60);
-        return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-
-        // LESS THAN A DAY AGO
-      } else if (timeDifference < 86400) {
-        const hours = Math.floor(timeDifference / 3600);
-        return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-
-        // LESS THAN A MONTH AGO
-      } else if (timeDifference < 2592000) {
-        const days = Math.floor(timeDifference / 86400);
-        return `${days} day${days > 1 ? "s" : ""} ago`;
-
-        // LESS THAN A YEAR AGO
-      } else if (timeDifference < 31536000) {
-        const months = Math.floor(timeDifference / 2592000);
-        return `${months} month${months > 1 ? "s" : ""} ago`;
-
-        // SHOW EXACT DATE
-      } else {
-        const date = new Date(unixTime * 1000); // Convert Unix time to milliseconds
-        return date.toLocaleDateString(); // Format as a localized date string
-      }
-    },
     handlePagination(page: string) {
       const url = new URL(window.location.href);
       url.searchParams.set("page", page); // Set the 'page' parameter to the current page number
@@ -91,8 +54,8 @@ export default {
         this.addItemInformation(itemData);
       })
     );
-
     console.log(this.items);
   },
+  components: { StoryItem },
 };
 </script>
