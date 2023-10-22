@@ -1,7 +1,6 @@
 <template>
   <main>
     <TheWelcome v-if="baseApiUrl !== ''" />
-    {{ baseApiUrl }}
   </main>
 </template>
 

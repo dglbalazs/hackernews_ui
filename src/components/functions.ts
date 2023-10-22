@@ -13,7 +13,7 @@ export async function getData(baseUrl: string,  showNumber: number, pageNumber: 
     const actualPageIndex = pageNumber ? pageNumber - 1 : 0
     const startAt = actualPageIndex && actualPageIndex > 0 ? actualPageIndex * showNumber : 0
 
-    const response = await fetch(baseUrl + '/topstories.json?startAt="' + startAt +'"&limitToFirst=' + showNumber + '&orderBy="$key"')
+    const response = await fetch(baseUrl + '/newstories.json?startAt="' + startAt +'"&limitToFirst=' + showNumber + '&orderBy="$key"')
 
     if (!response.ok) {
         throw new Error("Failed to fetch top stories")

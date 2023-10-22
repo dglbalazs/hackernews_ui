@@ -1,17 +1,56 @@
 <template>
-  <div class="story-item" :id="item.id">
-    <div class="story-item__generalinfo">
-      <h2>{{ item.title }}</h2>
+  <div class="story" :id="item.id">
+    <div :class="['story-content', hoveredLink ? 'hovered' : '']">
+      <div class="story-content__header">
+        <div class="story-content__header_index">
+          <span class="colored">#</span> {{ item.itemIndex + 1 }}
+        </div>
+        <div class="story-content__header_scores">Like {{ item.score }}</div>
+      </div>
+      <div class="story-content__main">
+        <p class="story-content__main_submit">
+          Submitted:
+          <span class="submitted_date" :data-tooltip="item.timeExact">{{
+            formatTime(item.time)
+          }}</span>
+          - by
+          <a
+            class="user"
+            :href="'https://news.ycombinator.com/user?id=' + item.by"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ item.by }}</a
+          >
+          <sup class="karma"> {{ item.byKarma }}</sup>
+        </p>
+        <a
+          :href="item.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          @mouseenter="() => (hoveredLink = true)"
+          @mouseleave="() => (hoveredLink = false)"
+        >
+          <h2 class="story-content__main_title">{{ item.title }}</h2>
+          <div class="story-content__main_url" v-if="item.url">
+            Source : <span class="colored">{{ getTLDFromURL(item.url) }}</span>
+          </div>
+          <div class="story-content__main_text" v-if="!item.url && item.text">
+            {{ truncateString(item.text, 150) }}
+          </div>
+        </a>
+      </div>
+    </div>
+    <div
+      :class="[
+        'story-comments',
+        !item.descendants || item.descendants < 1 ? 'no_comment' : '',
+      ]"
+    >
       <p>
         {{ item.descendants }} Comment{{
           item.descendants && item.descendants > 1 ? "s" : ""
         }}
       </p>
-      <p>Time: {{ formatTime(item.time) }}</p>
-    </div>
-    <div class="story-item__userinfo">
-      <p>Author: {{ item.by }}</p>
-      <p>Karma: {{ item.byKarma }}</p>
     </div>
   </div>
 </template>
@@ -20,6 +59,11 @@
 import type { ModifiedItem } from "@/components/types";
 
 export default {
+  data() {
+    return {
+      hoveredLink: false,
+    };
+  },
   props: {
     item: {
       type: Object as () => ModifiedItem,
@@ -41,6 +85,25 @@ export default {
     },
   },
   methods: {
+    getTLDFromURL(url?: string) {
+      if (!url) return;
+      // Use a regular expression to extract the TLD
+      const match = url.match(
+        /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:/\n?]+)?/
+      );
+      if (match && match[1]) {
+        // If a match is found, return the TLD
+        return match[1];
+      }
+      return null; // Return null if no TLD is found
+    },
+    truncateString(inputString: string, maxLength: number) {
+      if (inputString.length <= maxLength) {
+        return inputString; // Return the string as is if it's shorter than maxLength.
+      } else {
+        return inputString.substring(0, maxLength) + "..."; // Truncate and add three dots.
+      }
+    },
     // Function that formats UNIX time to e.g. "7 hours ago" || "3 minutes ago"
     formatTime(unixTime: number) {
       const currentTime = Math.floor(Date.now() / 1000);
@@ -80,17 +143,175 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$margin-block: 1em;
-$desktop-width: 80%;
-$desktop-padding: 2em 1em;
+$main-color: #ff6600;
+$comments-subcolor: hsl(24, 100%, 50%);
+$title-color: white;
+$nocomment-opacity: 0.6;
 
-.story-item {
+$overall-fontsize: 0.7rem;
+$index-fontsize: 1.5em;
+$scores-fontsize: 1em;
+$karma-fontsize: 0.8em;
+$karma-letterspacing: 0.02em;
+$title-fontsize: 2em;
+$subtext-fontsize: 1.2em;
+$subtext-lineheight: 1.8;
+$comments-fontsize: 1em;
+$comments-letterspacing: 0.01em;
+$comments-lineheight: 1.6;
+
+$storycard-width: 70%;
+$subtext-width: 100%;
+
+$card-bottom-radius: 2rem;
+
+$content-padding: 1em 2em;
+$content-padding-bottom: 2em;
+$user-margins: 0.2em;
+$title-margin-block: 1rem;
+$subtext-margin-top: 1em;
+$margin-block: 2em;
+
+.story {
+  font-size: $overall-fontsize;
   display: flex;
   margin-inline: auto;
   margin-block: $margin-block;
-  width: $desktop-width;
-  justify-content: space-between;
-  border: 1px solid green;
-  padding: $desktop-padding;
+  width: $storycard-width;
+  flex-direction: column;
+  //   border: 1px solid grey;
+  border-bottom-left-radius: $card-bottom-radius;
+  border-bottom-right-radius: $card-bottom-radius;
+
+  .colored {
+    color: $main-color;
+  }
+
+  .story-content {
+    cursor: pointer;
+    border: 1px solid grey;
+    border-bottom-color: transparent !important;
+    padding: $content-padding;
+    padding-bottom: $content-padding-bottom;
+    transition: box-shadow 250ms ease-in-out, border-color 250ms ease-in-out;
+
+    @media (hover: hover) {
+      &.hovered {
+        box-shadow: 0 -1px 0.4em $main-color;
+        border-color: $main-color;
+      }
+    }
+
+    .story-content__header {
+      display: flex;
+      justify-content: space-between;
+      .story-content__header_index {
+        font-size: $index-fontsize;
+      }
+
+      .story-content__header_scores {
+        font-size: $scores-fontsize;
+      }
+    }
+
+    .story-content__main {
+      .story-content__main_submit {
+        z-index: 2;
+
+        .submitted_date {
+          position: relative;
+          /* Other styles for the element */
+        }
+
+        .submitted_date::after {
+          content: attr(data-tooltip);
+          position: absolute;
+          bottom: 100%; /* Position the tooltip above the element */
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 8px;
+          background-color: #333;
+          color: #fff;
+          border-radius: 4px;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s, visibility 0.3s;
+          width: max-content;
+          z-index: 3; /* Ensure the tooltip appears above other content */
+        }
+
+        .submitted_date:hover::after {
+          opacity: 1;
+          visibility: visible;
+        }
+        .user {
+          text-decoration: underline;
+          text-decoration-color: $main-color;
+          text-underline-offset: $user-margins;
+          margin-right: $user-margins;
+          transition: text-underline-offset 200ms ease-in-out;
+          @media (hover: hover) {
+            &:hover {
+              text-underline-offset: calc($user-margins + 0.2em);
+            }
+          }
+        }
+
+        .karma {
+          font-size: $karma-fontsize;
+          letter-spacing: $karma-letterspacing;
+        }
+      }
+
+      .story-content__main_title {
+        color: $title-color;
+        margin-block: $title-margin-block;
+        font-size: $title-fontsize;
+      }
+
+      .story-content__main_url {
+        // margin-top: 1em;
+      }
+
+      .story-content__main_text {
+        margin-top: $subtext-margin-top;
+        width: $subtext-width;
+        font-size: $subtext-fontsize;
+        line-height: $subtext-lineheight;
+      }
+    }
+  }
+
+  .story-comments {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.6em 0.3em;
+    background: #ff6600;
+    color: rgb(20, 13, 13);
+    font-size: 1em;
+    letter-spacing: 0.01em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+    width: 100%;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    z-index: 2;
+    transition: box-shadow 250ms ease-in-out, border-color 250ms ease-in-out;
+    border: 1px solid transparent;
+
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: 0 -0.2em 0.5em hsl(24, 100%, 50%);
+        border-color: #ff6600;
+      }
+    }
+
+    &.no_comment {
+      opacity: 0.6;
+    }
+  }
 }
 </style>

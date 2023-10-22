@@ -1,18 +1,11 @@
 <template>
-  <div>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quas aliquid
-    nam iste atque quo minus non eveniet molestias, ut ab, dolorem vitae
-    possimus placeat! Suscipit et consequuntur nostrum vitae.
-
-    <div>
-      {{ baseApiUrl }}
-    </div>
+  <section id="content">
     <template v-for="item in items" :key="item.id">
       <StoryItem :item="item"></StoryItem>
     </template>
     <div @click="backButton" v-if="pageNumber > 1">Back</div>
     <div @click="nextButton">Next</div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
