@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header :class="[darkMode ? 'dark' : 'light']">
     <img
       alt="Vue logo"
       class="logo"
@@ -7,10 +7,7 @@
       width="125"
       height="125"
     />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -18,7 +15,7 @@
     </div>
   </header>
 
-  <RouterView :baseApiUrl="baseApiUrl" />
+  <RouterView :baseApiUrl="baseApiUrl" :class="[darkMode ? 'dark' : 'light']" />
 </template>
 
 <script lang="ts">
@@ -28,6 +25,7 @@ export default {
   data() {
     return {
       baseApiUrl: "",
+      darkMode: true,
     };
   },
   async beforeCreate() {

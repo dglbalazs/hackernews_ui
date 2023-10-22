@@ -1,0 +1,104 @@
+@import './base.css';
+@import './definitions/colors';
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+html,body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit; /* no underline */
+}
+
+//-----------------------
+
+::-moz-selection { /* Code for Firefox */
+    color: rgb(0, 204, 255);
+    text-shadow: 0 0 10px rgb(0, 204, 255);
+    background: rgb(89, 0, 255)rgb(9, 5, 19);
+    }
+    
+    ::selection {
+    color: rgb(0, 204, 255);
+    text-shadow: 0 0 10px rgb(0, 204, 255);
+    background: rgb(89, 0, 255)rgb(9, 5, 19);
+    }
+    
+    
+    html { 
+    scrollbar-color: hsl(197, 36%, 61%) #f1f1f1;
+    scrollbar-width: thin;
+    overflow-x: hidden;
+    }
+    
+    ::-webkit-scrollbar {
+    width: 0.4rem;
+    }
+    
+    ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    }
+    
+    ::-webkit-scrollbar-thumb {
+    background: hsl(197, 36%, 61%) !important; 
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+    background: hsl(197, 36%, 61%); 
+    }
+
+/* #app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+} */
