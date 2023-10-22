@@ -7,6 +7,7 @@ export interface Item {
     type: "job" | "story" | "comment" | "poll" | "pollopt";     // Type of Item
     by: string;                                                 // The username of the item's author.
     time: number;                                               // Creation date of the item, in Unix Time.
+
     text?: string;                                              // Comment, story, or poll text in HTML
     dead?: boolean;                                             // true if the item is dead.
     parent?: string;                                            // The comment's parent (item ID)
@@ -17,4 +18,9 @@ export interface Item {
     title?: string;                                             // The title of the story, poll, or job
     parts?: string[];                                           // List of related pollopts (item IDs)
     descendants?: number;                                       // Total comment count
+  }
+
+  // ITEM WITH EXTRA FIELDS
+  export interface ModifiedItem extends Item {
+    timeExact: string
   }
