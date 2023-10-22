@@ -18,16 +18,16 @@
 </template>
 
 <script lang="ts">
-import { getData, getItem, getCommentCount } from "@/components/functions";
-import type { Item } from "@/components/types";
+import { getData, getItem } from "@/components/functions";
+import type { Item, ModifiedItem } from "@/components/types";
 
 export default {
   data() {
     return {
       baseApiUrl: (this.$root as any).baseApiUrl,
-      returnArr: {} as Item,
+      returnArr: {} as ModifiedItem,
       count: 0,
-      items: [] as Array<Item>,
+      items: [] as Array<ModifiedItem>,
     };
   },
   methods: {
@@ -37,10 +37,7 @@ export default {
     getItem: async function (id: string) {
       return await getItem(this.baseApiUrl, id);
     },
-    getCommentCount: async function (id: string) {
-      return await getCommentCount(this.baseApiUrl, id);
-    },
-    addItemInformation: function (itemData: Item) {
+    addItemInformation: function (itemData: ModifiedItem) {
       this.items.push(itemData);
     },
     formatTime(unixTime: number) {
