@@ -42,7 +42,10 @@
         </a>
       </div>
     </div>
-    <div
+    <a
+      :href="'https://news.ycombinator.com/item?id=' + item.id"
+      target="_blank"
+      rel="noopener noreferrer"
       :class="[
         'story-comments',
         !item.descendants || item.descendants < 1 ? 'no_comment' : '',
@@ -53,7 +56,7 @@
           item.descendants && item.descendants > 1 ? "s" : ""
         }}
       </p>
-    </div>
+    </a>
   </div>
 </template>
 
