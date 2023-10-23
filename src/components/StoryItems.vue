@@ -1,9 +1,10 @@
 <template>
   <section id="content">
-    <template v-for="item in items" :key="item.id">
+    <Loader v-if="loading"></Loader>
+    <template v-if="!loading" v-for="item in items" :key="item.id">
       <StoryItem :item="item"></StoryItem>
     </template>
-    <div class="pagination_container">
+    <div class="pagination_container" v-if="!loading">
       <div
         class="pagination_button"
         id="backBtn"
@@ -21,9 +22,10 @@
 import { getData, getItem } from "@/components/functions";
 import type { ModifiedItem } from "@/components/types";
 import StoryItem from "@/components/StoryItem.vue";
+import Loader from "@/components/Helper/Loader.vue";
 
 export default {
-  components: { StoryItem },
+  components: { StoryItem, Loader },
   data() {
     return {
       baseApiUrl: (this.$root as any).baseApiUrl,
@@ -32,6 +34,7 @@ export default {
       items: [] as Array<ModifiedItem>,
       pageNumber: 1,
       storyPerPage: 10,
+      loading: true,
     };
   },
   props: ["endpoint"],
@@ -75,6 +78,7 @@ export default {
       }
     },
     feedStories: async function () {
+      this.loading = true;
       const fetchedData = await this.getData();
       console.dir(fetchedData);
 
@@ -103,6 +107,7 @@ export default {
 
       this.items = unsortedData.sort((a, b) => a.itemIndex - b.itemIndex);
       console.log(this.items);
+      this.loading = false;
     },
   },
   async created() {
