@@ -25,9 +25,15 @@ export default {
       storyPerPage: 10,
     };
   },
+  props: ["endpoint"],
   methods: {
     getData: async function () {
-      return await getData(this.baseApiUrl, this.storyPerPage, this.pageNumber);
+      return await getData(
+        this.baseApiUrl,
+        this.endpoint,
+        this.storyPerPage,
+        this.pageNumber
+      );
     },
     getItem: async function (id: string, itemIndex: number) {
       return await getItem(this.baseApiUrl, id, itemIndex);

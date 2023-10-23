@@ -1,3 +1,9 @@
 {
-    "API_BASE_URL": "https://hacker-news.firebaseio.com/v0"
+    "API_BASE_URL": "https://hacker-news.firebaseio.com/v0",
+    "top" : "topstories",
+    "new" : "newstories",
+    "best" : "beststories",
+    "ask" : "askstories",
+    "show" : "showstories",
+    "job" : "jobstories"
 }

@@ -9,13 +9,21 @@
     />
     <div class="wrapper">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Top</RouterLink>
+        <RouterLink to="/new">New</RouterLink>
+        <RouterLink to="/best">Best</RouterLink>
+        <RouterLink to="/ask">Ask</RouterLink>
+        <RouterLink to="/show">Show</RouterLink>
+        <RouterLink to="/job">Job</RouterLink>
       </nav>
     </div>
   </header>
 
-  <RouterView :baseApiUrl="baseApiUrl" :class="[darkMode ? 'dark' : 'light']" />
+  <RouterView
+    :baseApiUrl="baseApiUrl"
+    :options="options"
+    :class="[darkMode ? 'dark' : 'light']"
+  />
 </template>
 
 <script lang="ts">
@@ -25,6 +33,7 @@ export default {
   data() {
     return {
       baseApiUrl: "",
+      options: null,
       darkMode: true,
     };
   },
@@ -34,6 +43,8 @@ export default {
       if (response.ok) {
         const environmentData = await response.json();
         this.baseApiUrl = environmentData.API_BASE_URL;
+        this.options = environmentData;
+        console.log(this.options);
         console.log(environmentData);
       } else {
         console.error("Failed to fetch environment data");
@@ -56,7 +67,13 @@ header {
   margin: 0 auto 2rem;
 }
 
+.wrapper {
+  width: 100%;
+}
 nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
   width: 100%;
   font-size: 12px;
   text-align: center;

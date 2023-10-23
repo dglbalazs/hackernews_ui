@@ -8,12 +8,12 @@ import type { Item, ModifiedItem, User } from "@/components/types"
 //      - an array of string containing the IDs of articles
 // ------------------------------
 
-export async function getData(baseUrl: string,  showNumber: number, pageNumber: number): Promise<string[] | Map<number,string>>{
+export async function getData(baseUrl: string,  endpoint: string, showNumber: number, pageNumber: number): Promise<string[] | Map<number,string>>{
     
     const actualPageIndex = pageNumber ? pageNumber - 1 : 0
     const startAt = actualPageIndex && actualPageIndex > 0 ? actualPageIndex * showNumber : 0
 
-    const response = await fetch(baseUrl + '/newstories.json?startAt="' + startAt +'"&limitToFirst=' + showNumber + '&orderBy="$key"')
+    const response = await fetch(baseUrl + '/' + endpoint +'.json?startAt="' + startAt +'"&limitToFirst=' + showNumber + '&orderBy="$key"')
 
     if (!response.ok) {
         throw new Error("Failed to fetch top stories")
