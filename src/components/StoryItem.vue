@@ -165,7 +165,8 @@ $comments-fontsize: 1em;
 $comments-letterspacing: 0.01em;
 $comments-lineheight: 1.6;
 
-$storycard-width: 70%;
+$storycard-width-desktop: 70%;
+$storycard-width-mobile: 80%;
 $subtext-width: 100%;
 
 $card-bottom-radius: 2rem;
@@ -176,17 +177,23 @@ $user-margins: 0.2em;
 $title-margin-block: 1rem;
 $subtext-margin-top: 1em;
 $margin-block: 2em;
+$comments-padding-vertical: 0.6em;
+$comments-padding-horizontal: 0.3em;
 
 .story {
   font-size: $overall-fontsize;
   display: flex;
   margin-inline: auto;
   margin-block: $margin-block;
-  width: $storycard-width;
+  width: $storycard-width-desktop;
   flex-direction: column;
   //   border: 1px solid grey;
   border-bottom-left-radius: $card-bottom-radius;
   border-bottom-right-radius: $card-bottom-radius;
+
+  @media (max-width: 55em) {
+    width: $storycard-width-mobile;
+  }
 
   .colored {
     color: $main-color;
@@ -292,30 +299,30 @@ $margin-block: 2em;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.6em 0.3em;
-    background: #ff6600;
+    padding: $comments-padding-vertical $comments-padding-horizontal;
+    background: $main-color;
     color: rgb(20, 13, 13);
     font-size: 1em;
-    letter-spacing: 0.01em;
+    letter-spacing: $comments-letterspacing;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 500;
-    line-height: 1.6;
+    line-height: $comments-lineheight;
     width: 100%;
-    border-bottom-left-radius: 2rem;
-    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: $card-bottom-radius;
+    border-bottom-right-radius: $card-bottom-radius;
     z-index: 2;
     transition: box-shadow 250ms ease-in-out, border-color 250ms ease-in-out;
     border: 1px solid transparent;
 
     @media (hover: hover) {
       &:hover {
-        box-shadow: 0 -0.2em 0.5em hsl(24, 100%, 50%);
-        border-color: #ff6600;
+        box-shadow: 0 -0.2em 0.5em $comments-subcolor;
+        border-color: $main-color;
       }
     }
 
     &.no_comment {
-      opacity: 0.6;
+      opacity: $nocomment-opacity;
     }
   }
 }

@@ -4,6 +4,9 @@ import type { Item, ModifiedItem, User } from "@/components/types"
 // Description: Function that fetches the IDs of articles for main pages
 // Parameters: 
 //      - baseUrl: string that is pointing towards the main endpoint
+//      - endpoint: string that is pointing towards the sub-endpoint, e.g.: top stories, new stories, etc.
+//      - showNumber: number that incidates how many stories should we fetch
+//      - pageNumber: number that incidates which page are we at
 // Output: 
 //      - an array of string containing the IDs of articles
 // ------------------------------
@@ -29,6 +32,7 @@ export async function getData(baseUrl: string,  endpoint: string, showNumber: nu
 // Parameters: 
 //      - baseUrl: string that is pointing towards the main endpoint
 //      - itemId: the Id of the desired Item as string
+//      - itemIndex: index of the story in order to maintain the order
 // Output: 
 //      - an array of string containing the IDs of articles
 // ------------------------------
@@ -76,6 +80,7 @@ export async function getUserInfo(baseUrl: string, userId: string): Promise<User
 // Parameters: 
 //      - data: Item object type fetched from Item API endpoint
 //      - user: User object type fetched from User API endpoint
+//      - itemIndex: number that indicates the index of the story in the corresponding category
 // Output:
 //      - modifiedItem extended type that contains extra variables for the UI
 // ------------------------------
@@ -114,9 +119,3 @@ function formatDateTimeWithTimezone(unixTime: number): string {
   
     return new Intl.DateTimeFormat(undefined, options).format(date);
   }
-
-// EXTRA CONSIDERATIONS
-
-// - Stories do have count and all informations
-// - Data fetch timeout and it false, then show a refresh error page
-
