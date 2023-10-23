@@ -4,6 +4,9 @@
     <template v-if="!loading" v-for="item in items" :key="item.id">
       <StoryItem :item="item"></StoryItem>
     </template>
+    <div class="no-item-text" v-if="!loading && items.length == 0">
+      No element to be shown.
+    </div>
     <div class="pagination_container" v-if="!loading">
       <div
         class="pagination_button"
@@ -13,7 +16,14 @@
       >
         Back
       </div>
-      <div class="pagination_button" id="nextBtn" @click="nextButton">Next</div>
+      <div
+        v-if="items.length > 0"
+        class="pagination_button"
+        id="nextBtn"
+        @click="nextButton"
+      >
+        Next
+      </div>
     </div>
   </section>
 </template>
@@ -73,7 +83,6 @@ export default {
           if (!page) return;
           url.searchParams.set("page", page); // Set the 'page' parameter to the current page number
           window.history.replaceState(null, "", url.toString()); // Update the URL without reloading the page
-          console.error(Number(page));
           this.pageNumber = Number(page);
       }
     },
@@ -82,6 +91,11 @@ export default {
       const fetchedData = await this.getData();
       console.dir(fetchedData);
 
+      if (fetchedData == null) {
+        this.items = [];
+        this.loading = false;
+        return;
+      }
       // Handle in case we receive back an object which can happen in case of higher pagination
       const dataArray: string[] =
         typeof fetchedData === "object"
@@ -119,6 +133,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.no-item-text {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-block: 5rem;
+  font-size: 1.6rem;
+  font-family: "Courier New", Courier, monospace;
+}
 .pagination_container {
   margin: 3.5rem 0 4.5rem 0;
   display: grid;

@@ -22,7 +22,6 @@ export async function getData(baseUrl: string,  endpoint: string, showNumber: nu
         throw new Error("Failed to fetch top stories")
     }
     const data = await response.json()
-    console.warn(data[0])
     return data
 }
 
