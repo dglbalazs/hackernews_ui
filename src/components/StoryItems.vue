@@ -3,8 +3,17 @@
     <template v-for="item in items" :key="item.id">
       <StoryItem :item="item"></StoryItem>
     </template>
-    <div @click="backButton" v-if="pageNumber > 1">Back</div>
-    <div @click="nextButton">Next</div>
+    <div class="pagination_container">
+      <div
+        class="pagination_button"
+        id="backBtn"
+        @click="backButton"
+        v-if="pageNumber > 1"
+      >
+        Back
+      </div>
+      <div class="pagination_button" id="nextBtn" @click="nextButton">Next</div>
+    </div>
   </section>
 </template>
 
@@ -103,3 +112,33 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.pagination_container {
+  margin: 3.5rem 0 4.5rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  grid-template-areas: "backBtn nextBtn";
+  justify-content: center;
+}
+.pagination_button {
+  letter-spacing: 0.2em;
+  transition: color 250ms ease-in-out;
+  cursor: pointer;
+  @media (hover: hover) {
+    &:hover {
+      color: #ff6600;
+    }
+  }
+  &#backBtn {
+    justify-self: flex-end;
+    grid-area: backBtn;
+  }
+
+  &#nextBtn {
+    justify-self: flex-start;
+    grid-area: nextBtn;
+  }
+}
+</style>
