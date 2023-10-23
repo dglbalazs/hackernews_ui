@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
 
 import { mount } from '@vue/test-utils'
-import TheWelcome from '../TheWelcome.vue'
+import StoryItems from '../StoryItems.vue'
 
-describe('TheWelcome', () => {
+describe('StoryItems', () => {
   it('renders properly', () => {
-    const wrapper = mount(TheWelcome)
+    const wrapper = mount(StoryItems)
     expect(wrapper.text()).toContain('Lorem')
   })
 })
