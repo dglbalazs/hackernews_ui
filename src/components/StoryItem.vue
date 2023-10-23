@@ -30,13 +30,15 @@
           @mouseenter="() => (hoveredLink = true)"
           @mouseleave="() => (hoveredLink = false)"
         >
-          <h2 class="story-content__main_title">{{ item.title }}</h2>
+          <h2 class="story-content__main_title" v-html="item.title"></h2>
           <div class="story-content__main_url" v-if="item.url">
             Source : <span class="colored">{{ getTLDFromURL(item.url) }}</span>
           </div>
-          <div class="story-content__main_text" v-if="!item.url && item.text">
-            {{ truncateString(item.text, 150) }}
-          </div>
+          <div
+            class="story-content__main_text"
+            v-if="!item.url && item.text"
+            v-html="truncateString(item.text, 150)"
+          ></div>
         </a>
       </div>
     </div>
