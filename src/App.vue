@@ -56,7 +56,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -73,7 +73,6 @@ header {
 nav {
   display: flex;
   justify-content: center;
-  gap: 2rem;
   width: 100%;
   font-size: 12px;
   text-align: center;
@@ -92,6 +91,13 @@ nav a {
   display: inline-block;
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
+  transition: color 200ms ease-in-out;
+
+  @media (hover: hover) {
+    &:hover {
+      color: #ff6600;
+    }
+  }
 }
 
 nav a:first-of-type {
@@ -119,7 +125,7 @@ nav a:first-of-type {
     text-align: left;
     margin-left: -1rem;
     font-size: 1rem;
-
+    gap: 2rem;
     padding: 1rem 0;
     margin-top: 1rem;
   }
