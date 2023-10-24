@@ -133,6 +133,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#content {
+  min-height: 80vh;
+}
 .no-item-text {
   width: 100%;
   display: flex;
