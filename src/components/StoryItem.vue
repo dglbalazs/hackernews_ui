@@ -1,11 +1,17 @@
 <template>
   <div class="story" :id="item.id">
-    <div :class="['story-content', hoveredLink ? 'hovered' : '']">
+    <div
+      :class="[
+        'story-content',
+        hoveredLink ? 'hovered' : '',
+        item.type == 'job' ? 'jobtype' : '',
+      ]"
+    >
       <div class="story-content__header">
         <div class="story-content__header_index">
           <span class="colored">#</span> {{ item.itemIndex + 1 }}
         </div>
-        <div class="story-content__header_scores">
+        <div class="story-content__header_scores" v-if="item.type != 'job'">
           Score:
           {{ item.score }}
           <font-awesome-icon
@@ -50,6 +56,7 @@
       </div>
     </div>
     <a
+      v-if="item.type != 'job'"
       :href="'https://news.ycombinator.com/item?id=' + item.id"
       target="_blank"
       rel="noopener noreferrer"
@@ -216,6 +223,10 @@ $comments-padding-horizontal: 0.3em;
     padding: $content-padding;
     padding-bottom: $content-padding-bottom;
     transition: box-shadow 250ms ease-in-out, border-color 250ms ease-in-out;
+
+    &.jobtype {
+      border-bottom-color: grey !important;
+    }
 
     @media (hover: hover) {
       &.hovered {
