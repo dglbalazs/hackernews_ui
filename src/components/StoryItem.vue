@@ -5,7 +5,14 @@
         <div class="story-content__header_index">
           <span class="colored">#</span> {{ item.itemIndex + 1 }}
         </div>
-        <div class="story-content__header_scores">Like {{ item.score }}</div>
+        <div class="story-content__header_scores">
+          Score:
+          {{ item.score }}
+          <font-awesome-icon
+            icon="fa-solid fa-circle-arrow-up"
+            style="color: var(--color-brand)"
+          />
+        </div>
       </div>
       <div class="story-content__main">
         <p class="story-content__main_submit">
@@ -191,7 +198,6 @@ $comments-padding-horizontal: 0.3em;
   margin-block: $margin-block;
   width: $storycard-width-desktop;
   flex-direction: column;
-  //   border: 1px solid grey;
   border-bottom-left-radius: $card-bottom-radius;
   border-bottom-right-radius: $card-bottom-radius;
 
@@ -226,7 +232,20 @@ $comments-padding-horizontal: 0.3em;
       }
 
       .story-content__header_scores {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1em;
         font-size: $scores-fontsize;
+        svg {
+          font-size: 1.2em;
+          border-radius: 50%;
+          @media (hover: hover) {
+            &:hover {
+              scale: 1.1;
+            }
+          }
+        }
       }
     }
 
@@ -236,13 +255,12 @@ $comments-padding-horizontal: 0.3em;
 
         .submitted_date {
           position: relative;
-          /* Other styles for the element */
         }
 
         .submitted_date::after {
           content: attr(data-tooltip);
           position: absolute;
-          bottom: 100%; /* Position the tooltip above the element */
+          bottom: 100%;
           left: 50%;
           transform: translateX(-50%);
           padding: 8px;
@@ -253,7 +271,7 @@ $comments-padding-horizontal: 0.3em;
           visibility: hidden;
           transition: opacity 0.3s, visibility 0.3s;
           width: max-content;
-          z-index: 3; /* Ensure the tooltip appears above other content */
+          z-index: 3;
         }
 
         .submitted_date:hover::after {
@@ -286,7 +304,6 @@ $comments-padding-horizontal: 0.3em;
       }
 
       .story-content__main_url {
-        // margin-top: 1em;
       }
 
       .story-content__main_text {
@@ -315,13 +332,15 @@ $comments-padding-horizontal: 0.3em;
     border-bottom-left-radius: $card-bottom-radius;
     border-bottom-right-radius: $card-bottom-radius;
     z-index: 2;
-    transition: box-shadow 250ms ease-in-out, border-color 250ms ease-in-out;
+    transition: box-shadow 250ms ease-in-out, border-color 250ms ease-in-out,
+      opacity 250ms ease-in-out;
     border: 1px solid transparent;
 
     @media (hover: hover) {
       &:hover {
         box-shadow: 0 -0.2em 0.5em $comments-subcolor;
         border-color: $main-color;
+        opacity: 1 !important;
       }
     }
 
