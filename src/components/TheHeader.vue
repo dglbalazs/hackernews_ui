@@ -1,12 +1,18 @@
 <template>
   <header :class="[darkMode ? 'dark' : 'light']">
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
+    <a
+      class="image_link"
+      href="https://news.ycombinator.com/news"
+      target="_blank"
+      rel="noopenner noreferrer"
+      ><img
+        alt="logo"
+        class="logo"
+        src="@/assets/logo.svg"
+        width="125"
+        height="125"
+      />
+    </a>
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Top</RouterLink>
@@ -37,6 +43,9 @@ header {
     padding-right: calc(var(--section-gap) / 2);
   }
 
+  .image_link {
+    margin-top: -0.5em;
+  }
   .logo {
     display: block;
     margin: 0 auto 2rem;

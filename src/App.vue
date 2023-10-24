@@ -1,5 +1,5 @@
 <template>
-  <TheHeader></TheHeader>
+  <TheHeader :darkMode="[darkMode ? 'dark' : 'light']"></TheHeader>
   <RouterView
     :baseApiUrl="baseApiUrl"
     :options="options"
