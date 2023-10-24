@@ -14,10 +14,18 @@
         <div class="story-content__header_scores" v-if="item.type != 'job'">
           Score:
           {{ item.score }}
-          <font-awesome-icon
-            icon="fa-solid fa-circle-arrow-up"
-            style="color: var(--color-brand)"
-          />
+          <a
+            :href="
+              'https://news.ycombinator.com/vote?id=' + item.id + '&how=up'
+            "
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <font-awesome-icon
+              icon="fa-solid fa-circle-arrow-up"
+              style="color: var(--color-brand)"
+            />
+          </a>
         </div>
       </div>
       <div class="story-content__main">
@@ -247,8 +255,9 @@ $comments-padding-horizontal: 0.3em;
         justify-content: center;
         gap: 1em;
         font-size: $scores-fontsize;
+
         svg {
-          font-size: 1.2em;
+          font-size: 1.7em;
           border-radius: 50%;
           @media (hover: hover) {
             &:hover {
