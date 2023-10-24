@@ -105,7 +105,7 @@ function prepareListOutputData(data: string[] | Map<number,string>) {
     dataArray = (data as string[]).filter((item) => item);
     indexArray = dataArray.map((item) => data.indexOf(item))
 
-  // In casde it is an object
+  // In case it is an object
   } else {
     dataArray = Object.values(data)
     indexArray = Object.keys(data).map((index) => parseInt(index))
