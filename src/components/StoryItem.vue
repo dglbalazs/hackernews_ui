@@ -7,10 +7,15 @@
         item.type == 'job' ? 'jobtype' : '',
       ]"
     >
+      <!-- --------------- -->
+      <!-- HEADER -->
+      <!-- --------------- -->
       <div class="story-content__header">
+        <!-- INDEX NUMBER -->
         <div class="story-content__header_index">
           <span class="colored">#</span> {{ item.itemIndex + 1 }}
         </div>
+        <!-- SCORE PART -->
         <div class="story-content__header_scores" v-if="item.type != 'job'">
           Score:
           {{ item.score }}
@@ -28,13 +33,19 @@
           </a>
         </div>
       </div>
+      <!-- --------------- -->
+      <!-- MAIN PART -->
+      <!-- --------------- -->
       <div class="story-content__main">
+        <!-- SUBMISSION INFO -->
         <p class="story-content__main_submit">
           Submitted:
+          <!-- DATE -->
           <span class="submitted_date" :data-tooltip="item.timeExact">{{
             formatTime(item.time)
           }}</span>
           - by
+          <!-- USER -->
           <a
             class="user"
             :href="'https://news.ycombinator.com/user?id=' + item.by"
@@ -42,8 +53,10 @@
             rel="noopener noreferrer"
             >{{ item.by }}</a
           >
+          <!-- USER'S KARMA -->
           <sup class="karma"> {{ item.byKarma }}</sup>
         </p>
+        <!-- OUTLINK TO ARTICLE -->
         <a
           :href="item.url"
           target="_blank"
@@ -51,10 +64,13 @@
           @mouseenter="() => (hoveredLink = true)"
           @mouseleave="() => (hoveredLink = false)"
         >
+          <!-- TITLE -->
           <h2 class="story-content__main_title" v-html="item.title"></h2>
+          <!-- SOURCE -->
           <div class="story-content__main_url" v-if="item.url">
             Source : <span class="colored">{{ getTLDFromURL(item.url) }}</span>
           </div>
+          <!-- SUBTEXT IN CASE OF NO SOURCE -->
           <div
             class="story-content__main_text"
             v-if="!item.url && item.text"
@@ -63,6 +79,9 @@
         </a>
       </div>
     </div>
+    <!-- --------------- -->
+    <!-- COMMENTS BUTTON -->
+    <!-- --------------- -->
     <a
       v-if="item.type != 'job'"
       :href="'https://news.ycombinator.com/item?id=' + item.id"
