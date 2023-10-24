@@ -29,7 +29,7 @@ export default {
         ["API", "https://github.com/HackerNews/API", "outlink"],
         ["Security", "https://news.ycombinator.com/security.html", "outlink"],
         ["Legal", "https://ycombinator.com/legal/", "outlink"],
-        ["Apply to YC", "https://ycombinator.com/apply/", "mail"],
+        ["Apply to YC", "https://ycombinator.com/apply/", "outlink"],
         ["Contact", "hn@ycombinator", "mail"],
       ],
     };
