@@ -1,35 +1,20 @@
 <template>
-  <header :class="[darkMode ? 'dark' : 'light']">
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Top</RouterLink>
-        <RouterLink to="/new">New</RouterLink>
-        <RouterLink to="/best">Best</RouterLink>
-        <RouterLink to="/ask">Ask</RouterLink>
-        <RouterLink to="/show">Show</RouterLink>
-        <RouterLink to="/job">Job</RouterLink>
-      </nav>
-    </div>
-  </header>
-
+  <TheHeader></TheHeader>
   <RouterView
     :baseApiUrl="baseApiUrl"
     :options="options"
     :class="[darkMode ? 'dark' : 'light']"
   />
+  <TheFooter></TheFooter>
 </template>
 
 <script lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import TheHeader from "./components/TheHeader.vue";
+import TheFooter from "./components/TheFooter.vue";
 
 export default {
+  components: { TheHeader, TheFooter },
   data() {
     return {
       baseApiUrl: "",
