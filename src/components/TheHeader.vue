@@ -78,7 +78,7 @@ header {
         }
 
         &:hover {
-          color: #ff6600;
+          color: var(--color-brand);
         }
         &:not(:first-of-type) {
           border-left: 1px solid var(--color-border);
@@ -89,7 +89,7 @@ header {
         }
 
         &.router-link-exact-active {
-          color: #ff6600;
+          color: var(--color-brand);
           text-decoration: underline;
           text-underline-offset: 0.5em;
         }

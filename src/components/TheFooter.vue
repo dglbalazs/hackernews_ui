@@ -38,7 +38,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #footer {
-  border-top: 1px solid #ff6600;
+  border-top: 1px solid var(--color-brand);
   //   min-height: 25vh;
 
   display: flex;
@@ -51,7 +51,7 @@ export default {
     transition: color 200ms ease-in-out;
     @media (hover: hover) {
       &:hover {
-        color: #ff6600;
+        color: var(--color-brand);
       }
     }
     @media (max-width: 55em) {

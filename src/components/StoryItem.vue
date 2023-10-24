@@ -90,6 +90,7 @@ export default {
     },
   },
   methods: {
+    // Top Domain Url Conversion from full URL
     getTLDFromURL(url?: string) {
       if (!url) return;
       // Use a regular expression to extract the TLD
@@ -102,6 +103,8 @@ export default {
       }
       return null; // Return null if no TLD is found
     },
+
+    // Shortening text in case we are not showing a URL source, but the Optional Text input field from submission.
     truncateString(inputString: string, maxLength: number) {
       if (inputString.length <= maxLength) {
         return inputString; // Return the string as is if it's shorter than maxLength.
@@ -109,6 +112,7 @@ export default {
         return inputString.substring(0, maxLength) + "..."; // Truncate and add three dots.
       }
     },
+
     // Function that formats UNIX time to e.g. "7 hours ago" || "3 minutes ago"
     formatTime(unixTime: number) {
       const currentTime = Math.floor(Date.now() / 1000);
@@ -148,7 +152,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$main-color: #ff6600;
+$main-color: var(--color-brand);
 $comments-subcolor: hsl(24, 100%, 50%);
 $title-color: white;
 $nocomment-opacity: 0.6;
