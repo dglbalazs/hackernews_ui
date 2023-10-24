@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen, waitFor, fireEvent } from "@testing-library/vue";
-import { nextTick } from 'Vue'
 import { mount } from '@vue/test-utils'
 import StoryItems from '../StoryItems.vue'
 
@@ -12,7 +11,6 @@ describe('StoryItems', () => {
 
     })
 
-   await nextTick()
 
     await waitFor(() => {
       // expect(screen.getByText('Comment')).toBeDefined()
