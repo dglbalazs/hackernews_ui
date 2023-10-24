@@ -1,6 +1,10 @@
 <template>
   <main>
-    <StoryItems v-if="baseApiUrl !== '' && options" :endpoint="options.new" />
+    <StoryItems
+      v-if="baseApiUrl !== '' && options"
+      :baseApiUrl="baseApiUrl"
+      :endpoint="options.new"
+    />
   </main>
 </template>
 

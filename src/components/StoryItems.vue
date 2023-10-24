@@ -38,16 +38,13 @@ export default {
   components: { StoryItem, Loader },
   data() {
     return {
-      baseApiUrl: (this.$root as any).baseApiUrl,
-      returnArr: {} as ModifiedItem,
-      count: 0,
       items: [] as Array<ModifiedItem>,
       pageNumber: 1,
       storyPerPage: 10,
       loading: true,
     };
   },
-  props: ["endpoint"],
+  props: ["endpoint", "baseApiUrl"],
   methods: {
     // Fetching Story IDs for the page
     getData: async function () {

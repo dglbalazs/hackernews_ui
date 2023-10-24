@@ -60,13 +60,8 @@ header {
       margin-top: 2rem;
 
       @media (min-width: 55rem) {
-        // text-align: left;
-        // margin-left: -1rem;
         font-size: 1rem;
         gap: 2em;
-        // padding: 0 2rem;
-        // padding: 1rem 0;
-        // margin-top: 1rem;
       }
 
       a {

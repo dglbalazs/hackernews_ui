@@ -39,7 +39,6 @@ export default {
 <style lang="scss" scoped>
 #footer {
   border-top: 1px solid var(--color-brand);
-  //   min-height: 25vh;
 
   display: flex;
   padding-block: 2em;
