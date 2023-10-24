@@ -6,7 +6,6 @@ https://hackernews-ui.vercel.app/
 ## STATUS:
 
 Things to come:
-- Proper Like / Upvote CTA button + Hide CTA button
 - Proper Unit Tests
 - Optional : Light / Dark mode? / Refresh Button for the user
 

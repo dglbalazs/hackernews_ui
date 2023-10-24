@@ -7,9 +7,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
-import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faCircleArrowUp, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCircleArrowUp)
+library.add(faCaretLeft,faCaretRight,faCircleArrowUp)
 
 import App from './App.vue'
 import router from './router'

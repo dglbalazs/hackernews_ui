@@ -14,6 +14,10 @@
         @click="paginationButton('back')"
         v-if="pageNumber > 1"
       >
+        <font-awesome-icon
+          icon="fa-solid fa-caret-left"
+          style="color: var(--color-brand)"
+        />
         Back
       </div>
       <div
@@ -23,6 +27,10 @@
         @click="paginationButton('next')"
       >
         Next
+        <font-awesome-icon
+          icon="fa-solid fa-caret-right"
+          style="color: var(--color-brand)"
+        />
       </div>
     </div>
   </section>
@@ -92,7 +100,6 @@ export default {
     feedStories: async function () {
       this.loading = true;
       const fetchedData = await this.getData(); // Collecting IDs for the page
-      console.dir(fetchedData);
 
       // In case the page is empty, we store an empty array
       if (fetchedData == null) {
@@ -138,7 +145,6 @@ export default {
   },
   async created() {
     this.handlePagination("", "get");
-    console.log(this.baseApiUrl);
     this.feedStories();
   },
 };
