@@ -219,13 +219,12 @@ $comments-padding-horizontal: 0.3em;
   .story-content {
     cursor: pointer;
     border: 1px solid grey;
-    border-bottom-color: transparent !important;
     padding: $content-padding;
     padding-bottom: $content-padding-bottom;
     transition: box-shadow 250ms ease-in-out, border-color 250ms ease-in-out;
 
-    &.jobtype {
-      border-bottom-color: grey !important;
+    &:not(.jobtype) {
+      border-bottom-color: transparent !important;
     }
 
     @media (hover: hover) {
