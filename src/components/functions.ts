@@ -24,7 +24,6 @@ export async function getData(baseUrl: string,  endpoint: string, showNumber: nu
 
     const data = await response.json()
     
-    console.log(data)
     const returnData = prepareListOutputData(data)
     return returnData
 }
@@ -111,7 +110,7 @@ function prepareListOutputData(data: string[] | Map<number,string>) {
     indexArray = Object.keys(data).map((index) => parseInt(index))
   } 
 
-  returnObject.hasData = true
+  returnObject.hasData = dataArray.length ? true : false
   returnObject.dataArr = dataArray
   returnObject.indexArr = indexArray
   
