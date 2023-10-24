@@ -1,4 +1,4 @@
-import type { Item, ModifiedItem, User } from "@/components/types"
+import type { Item, ModifiedItem, itemListReturn, User } from "@/components/types"
 
 // ------------------------------
 // Description: Function that fetches the IDs of articles for main pages
@@ -11,7 +11,7 @@ import type { Item, ModifiedItem, User } from "@/components/types"
 //      - an array of string containing the IDs of articles
 // ------------------------------
 
-export async function getData(baseUrl: string,  endpoint: string, showNumber: number, pageNumber: number): Promise<string[] | Map<number,string>>{
+export async function getData(baseUrl: string,  endpoint: string, showNumber: number, pageNumber: number): Promise<itemListReturn>{
     
     const actualPageIndex = pageNumber ? pageNumber - 1 : 0
     const startAt = actualPageIndex && actualPageIndex > 0 ? actualPageIndex * showNumber : 0
@@ -21,8 +21,12 @@ export async function getData(baseUrl: string,  endpoint: string, showNumber: nu
     if (!response.ok) {
         throw new Error("Failed to fetch top stories")
     }
+
     const data = await response.json()
-    return data
+    
+    console.log(data)
+    const returnData = prepareListOutputData(data)
+    return returnData
 }
 
 
@@ -45,7 +49,7 @@ export async function getItem(baseUrl: string, itemId: string, itemIndex: number
     const data = await response.json();
     const user = await getUserInfo(baseUrl, data.by)
 
-    const modifiedItem = prepareOutputData(data, user, itemIndex)
+    const modifiedItem = prepareItemOutputData(data, user, itemIndex)
     
     return modifiedItem;
   }
@@ -75,6 +79,46 @@ export async function getUserInfo(baseUrl: string, userId: string): Promise<User
 // ------------------------------------------------------------------
 
 // ------------------------------
+// Description: Function that modifies the list of IDs fetched from the API endpoint and returns a purified response
+// Parameters: 
+//      - data: List of IDs fetched from Item API endpoint: can be either a simple array or an object
+// Output:
+//      - itemListReturn Type object that contains a boolean variable remarking whether we have data or not, an array for results and another one for the indices
+// ------------------------------
+function prepareListOutputData(data: string[] | Map<number,string>) {
+ 
+  const returnObject: itemListReturn = {
+    hasData: false,
+    dataArr: [],
+    indexArr: []
+  }
+
+  if (data == null) {
+    return returnObject
+  }
+
+  let dataArray: string[];
+  let indexArray: number[];
+
+  // In case it is an array
+  if (Array.isArray(data)) {
+    dataArray = (data as string[]).filter((item) => item);
+    indexArray = dataArray.map((item) => data.indexOf(item))
+
+  // In casde it is an object
+  } else {
+    dataArray = Object.values(data)
+    indexArray = Object.keys(data).map((index) => parseInt(index))
+  } 
+
+  returnObject.hasData = true
+  returnObject.dataArr = dataArray
+  returnObject.indexArr = indexArray
+  
+  return returnObject
+}
+
+// ------------------------------
 // Description: Function that modifies the data fetched from the API endpoint and returns the extended data meant to be shown
 // Parameters: 
 //      - data: Item object type fetched from Item API endpoint
@@ -83,7 +127,7 @@ export async function getUserInfo(baseUrl: string, userId: string): Promise<User
 // Output:
 //      - modifiedItem extended type that contains extra variables for the UI
 // ------------------------------
-function prepareOutputData(data: Item, user: User, itemIndex: number) : ModifiedItem {
+function prepareItemOutputData(data: Item, user: User, itemIndex: number) : ModifiedItem {
     const timeExact = formatDateTimeWithTimezone(data.time);
     const byKarma = user.karma ? user.karma : 0
     

@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { getData, getItem } from "@/components/functions";
-import type { ModifiedItem } from "@/components/types";
+import type { ModifiedItem, itemListReturn } from "@/components/types";
 import StoryItem from "@/components/StoryItem.vue";
 import Loader from "@/components/Helper/Loader.vue";
 
@@ -56,17 +56,34 @@ export default {
   methods: {
     // Fetching Story IDs for the page
     getData: async function () {
-      return await getData(
-        this.baseApiUrl,
-        this.endpoint,
-        this.storyPerPage,
-        this.pageNumber
-      );
+      try {
+        const response = await getData(
+          this.baseApiUrl,
+          this.endpoint,
+          this.storyPerPage,
+          this.pageNumber
+        );
+        return response;
+      } catch (error) {
+        console.error("Error while fetching ids - ", error);
+        const emptyData: itemListReturn = {
+          hasData: false,
+          dataArr: [],
+          indexArr: [],
+        };
+        return emptyData;
+      }
     },
 
     // Fetching Story data based on ID
     getItem: async function (id: string, itemIndex: number) {
-      return await getItem(this.baseApiUrl, id, itemIndex);
+      try {
+        const itemData = await getItem(this.baseApiUrl, id, itemIndex);
+        return itemData;
+      } catch (error) {
+        console.error("Error fetching item:", error);
+        return null;
+      }
     },
 
     // Pagination Button functionality
@@ -99,44 +116,32 @@ export default {
     // Main function for feeding data to the page
     feedStories: async function () {
       this.loading = true;
-      const fetchedData = await this.getData(); // Collecting IDs for the page
+
+      // Collecting IDs for the page
+      const dataResponse: itemListReturn = await this.getData();
 
       // In case the page is empty, we store an empty array
-      if (fetchedData == null) {
+      if (!dataResponse.hasData) {
         this.items = [];
         this.loading = false;
         return;
       }
 
-      // Handle in case we receive back an object which can happen in case of higher pagination
-      const dataArray: string[] =
-        typeof fetchedData === "object"
-          ? Object.values(fetchedData)
-          : (fetchedData as Array<string>);
-
-      const indexArray: string[] =
-        typeof fetchedData === "object" ? Object.keys(fetchedData) : [];
-
-      // Sometimes we receive back null values in case of pagination, so filter them out
-      const filteredData = dataArray.filter((item) => item);
-
-      // Create our temporary container of items where we can asynch feed the data
+      // Prepare empty array where we can async feed the data for each item
       let unsortedData = [] as Array<ModifiedItem>;
 
-      // Call asynch full data fetch for all of the corresponding Story Ids we received
+      // Fetch the data for all IDs async
       await Promise.all(
-        filteredData.map(async (itemId: string) => {
-          const index =
-            typeof fetchedData === "object"
-              ? parseInt(indexArray[dataArray.indexOf(itemId)], 10)
-              : dataArray.indexOf(itemId);
-          let itemData = await this.getItem(itemId, index);
-          unsortedData.push(itemData);
+        dataResponse.dataArr.map(async (itemId: string, index: number) => {
+          let itemData = await this.getItem(
+            itemId,
+            dataResponse.indexArr[index]
+          );
+          if (itemData) unsortedData.push(itemData);
         })
       );
 
-      // Since the previous call was asynch, the order could have been messed up
-      // so let's sort the results based on their index
+      // Now that we have the data, sort them again, as async didn't complete it in original order
       this.items = unsortedData.sort((a, b) => a.itemIndex - b.itemIndex);
 
       console.log(this.items);

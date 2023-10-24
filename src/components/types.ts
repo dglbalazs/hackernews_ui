@@ -28,6 +28,13 @@ export interface Item {
   }
 
 
+  // RETURN TYPE FOR LIST OF IDs DATA FETCH 
+  export interface itemListReturn {
+    hasData: boolean,
+    dataArr: string[] ,
+    indexArr: number[]
+  }
+
 // USER
 export interface User {
     id: string;        // The user's unique username. Case-sensitive. Required.
