@@ -9,6 +9,7 @@ export default defineConfig({
     vue(),
     // require('vite-plugin-scss')(),
   ],
+  base: '',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
